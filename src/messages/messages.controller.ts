@@ -6,19 +6,15 @@ import {
   Param,
   Query,
   NotFoundException,
+  Injectable,
 } from '@nestjs/common';
 import { CreateMessageDto } from './dtos/create-message.dto';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')
+@Injectable()
 export class MessagesController {
-  service: MessagesService;
-
-  constructor() {
-    // Controller is creating its own dependency
-    // DONT DO THIS IN REAL APPS
-    this.service = new MessagesService();
-  }
+  constructor(public service: MessagesService) {}
 
   @Get('/:id')
   async getMessage(
