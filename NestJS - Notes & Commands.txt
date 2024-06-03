@@ -1,0 +1,65 @@
+https://www.npmjs.com/search?q=%40nestjs
+
+Create project:
+npm init -y
+npm install @nestjs/common@7.6.17 @nestjs/core@7.6.7 @nestjs/platform-express@7.6.7 reflect-metadata@0.1.13 typescript@4.3.2
+
+How Server Responds in Nest:
+1- Validate Request (Pipe)
+2- Authenticate User (Guard)
+3- Route Request to Particular Function (Controller)
+4- Execute Buisness Logic (Service)
+5- Access Database (Repository)
+
+Other than these 5 there are other parts of Nest:
+6- Module (Groups together code)
+7- Filter (Handle error that occur during request handling)
+8- Interceptor (Adds extra logic to incoming requests or outgoing responses)
+
+Run project:
+npx ts-node-dev src/main.ts
+
+Install Nest CLI globally:
+sudo npm install -g @nestjs/cli
+
+Create new project with Nest CLI:
+nest new <project_name>
+
+Run:
+npm run start:dev
+
+Scaffold code file:
+nest g module <file_name> --flat
+nest g controller <file_name> --flat
+nest g service <file_name> --flat
+nest g repository <file_name> --flat
+
+Libraries for Validate Pipe:
+npm install class-validator
+npm install class-transformer
+
+Sharing Code B/W Modules:
+We always export Service and import Modules.
+For example: CpuService needs to be used inside ComputerController
+
+@Module({
+  providers: [CpuService],
+  exports: [CpuService],
+})
+export class CpuModule {}
+
+@Module({
+  controllers: [ComputerController],
+  imports: [CpuModule],
+})
+export class ComputerModule {}
+
+If we import Service instead of Module then we may face below error:
+Classes annotated with @Injectable(), @Catch(), and @Controller() decorators must not appear in the "imports" array of a module.
+
+Install TypeORM and SQLite
+npm install @nestjs/typeorm typeorm sqlite3
+
+TypeORM's synchronize property to be true in dev enviornment only. Not for production
+
+Validation pipe "whitelist: true" enforces that no extra json property is received to Nest except for what available in dto.
